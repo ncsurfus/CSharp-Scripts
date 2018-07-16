@@ -1,5 +1,3 @@
-#! "netcoreapp2.0"
-
 // Declare a variable in a conditional.
 if("condition" is var conditionTest) {
     Console.WriteLine(conditionTest);
