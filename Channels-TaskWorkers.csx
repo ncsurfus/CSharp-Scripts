@@ -9,10 +9,10 @@ var channel = Channel.CreateUnbounded<string>();
 
 var workers = Enumerable
     .Range(1, workerCount)
-    .Select(async id =>
+    .Select(async workerId =>
     {
         // Random number generator to create a random delay later on.
-        var rgen = new Random(id);
+        var rgen = new Random(workerId);
         // await until there is data. If WaitToReadAsync returns false the channel is closed.
         while (await channel.Reader.WaitToReadAsync().ConfigureAwait(false))
         {
