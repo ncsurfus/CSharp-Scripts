@@ -1,7 +1,9 @@
 #r "nuget: System.Threading.Channels,4.5.0"
 
+using System.Threading;
 using System.Threading.Channels;
 
+// Set high max worker count assuming worker is not CPU bound.
 var workerCount = 200;
 var workCount = 1000;
 
@@ -24,8 +26,9 @@ var workers = Enumerable
             }
 
             // Random async processing work...
-            await Task.Delay(rgen.Next(0, 5)).ConfigureAwait(false);
-            Console.WriteLine(message);
+            var delay = rgen.Next(0,5);
+            await Task.Delay(delay).ConfigureAwait(false);
+            Console.WriteLine($"W-{workerId} T-{Thread.CurrentThread.ManagedThreadId} D-{delay}: {message}");
         }
     }).ToArray();
 
