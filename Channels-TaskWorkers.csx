@@ -18,10 +18,10 @@ var workers = Enumerable
         // await until there is data. If WaitToReadAsync returns false the channel is closed.
         while (await channel.Reader.WaitToReadAsync().ConfigureAwait(false))
         {
-            // Attempt to get a message
+            // WaitToReadAsync completed, which indicates messages are available.
+            // Try to get the message or continue the loop if this Task didn't get it.
             if (!channel.Reader.TryRead(out var message))
             {
-                // We were woken up for data, but failed to get a message.
                 continue;
             }
 
